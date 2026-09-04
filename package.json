@@ -3,13 +3,21 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "SkillSwap Campus — student web app + admin panel (UI only, shared design layer)",
+  "description": "SkillSwap Campus \u2014 student web app + admin panel (UI only, shared design layer)",
   "scripts": {
     "test": "vitest run --config vitest.config.ts",
     "build": "npm run build --prefix user-web && npm run build --prefix admin-web",
     "check": "npm run check --prefix user-web && npm run check --prefix admin-web"
   },
   "devDependencies": {
-    "vitest": "^2.1.8"
-  }
+    "vitest": "^2.1.8",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "gsap": "^3.15.0",
+    "lucide-svelte": "^1.0.1",
+    "motion": "^13.2.0",
+    "svelte": "^5.57.0",
+    "tailwind-merge": "^3.6.0"
+  },
+  "//": "Deps are duplicated at the root so that shared/ \u2014 which sits outside both app roots \u2014 resolves them by walking up. The apps install their own copies."
 }
