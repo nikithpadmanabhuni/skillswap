@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script>
       // Applied before first paint so the themed background never flashes.
-      // Mirrors readTheme() in $shared/theme/theme.svelte.ts — keep in sync.
+      // Mirrors read() in $shared/theme.svelte.ts — keep the two in sync.
       (function () {
         try {
           var m = document.cookie.match(/(?:^|; )skillswap_theme=([^;]*)/);
