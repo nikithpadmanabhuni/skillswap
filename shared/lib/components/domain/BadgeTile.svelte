@@ -6,12 +6,12 @@
     Star,
     Triangle,
     Zap,
-    type Icon as IconType
   } from 'lucide-svelte';
+  import type { IconComponent } from '../icon';
   import type { CampusBadge } from '../../types';
   import { cn } from '../../utils/cn';
 
-  const ICONS: Record<string, typeof IconType> = {
+  const ICONS: Record<string, IconComponent> = {
     triangle: Triangle,
     'graduation-cap': GraduationCap,
     star: Star,

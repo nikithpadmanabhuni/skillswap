@@ -6,14 +6,14 @@
     Printer,
     Users,
     UtensilsCrossed,
-    type Icon as IconType
   } from 'lucide-svelte';
+  import type { IconComponent } from '../icon';
   import type { CampusPerk } from '../../types';
   import Button from '../ui/Button.svelte';
   import Card from '../ui/Card.svelte';
   import KarmaBadge from './KarmaBadge.svelte';
 
-  const ICONS: Record<string, typeof IconType> = {
+  const ICONS: Record<string, IconComponent> = {
     coffee: Coffee,
     printer: Printer,
     'book-open': BookOpen,
@@ -38,7 +38,7 @@
   const short = $derived(perk.karmaCost - balance);
 </script>
 
-<Card class="flex flex-col gap-3">
+<Card class="flex h-full flex-col gap-3">
   <div class="flex items-start justify-between gap-3">
     <span
       class="grid size-11 shrink-0 place-items-center rounded-[var(--radius-button)]"

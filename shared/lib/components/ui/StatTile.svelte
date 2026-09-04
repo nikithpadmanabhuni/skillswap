@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { Component } from 'svelte';
   import { cn } from '../../utils/cn';
+  import type { IconComponent } from '../icon';
 
   let {
     label,
@@ -13,7 +13,7 @@
     label: string;
     value: string | number;
     sub?: string;
-    icon?: Component;
+    icon?: IconComponent;
     tone?: 'neutral' | 'brand' | 'emerald' | 'karma' | 'danger';
     class?: string;
   } = $props();

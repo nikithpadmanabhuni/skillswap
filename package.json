@@ -7,17 +7,20 @@
   "scripts": {
     "test": "vitest run --config vitest.config.ts",
     "build": "npm run build --prefix user-web && npm run build --prefix admin-web",
-    "check": "npm run check --prefix user-web && npm run check --prefix admin-web"
+    "check": "npm run check --prefix user-web && npm run check --prefix admin-web",
+    "preview:user": "node tools/preview.mjs user-web/build 4173",
+    "preview:admin": "node tools/preview.mjs admin-web/build 4174"
   },
   "devDependencies": {
-    "vitest": "^2.1.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "gsap": "^3.15.0",
     "lucide-svelte": "^1.0.1",
     "motion": "^13.2.0",
+    "playwright": "^1.62.1",
     "svelte": "^5.57.0",
-    "tailwind-merge": "^3.6.0"
+    "tailwind-merge": "^3.6.0",
+    "vitest": "^2.1.8"
   },
   "//": "Deps are duplicated at the root so that shared/ \u2014 which sits outside both app roots \u2014 resolves them by walking up. The apps install their own copies."
 }

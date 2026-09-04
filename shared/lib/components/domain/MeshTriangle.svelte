@@ -65,15 +65,22 @@
     loadGsap().then((gsap) => {
       if (!gsap || cancelled || !el) return;
       ctx = gsap.context(() => {
+        // Kept under a second end to end. This is a screen people land on
+        // directly, and a diagram that takes 1.5s to become readable reads as
+        // slow rather than considered.
         const tl = gsap.timeline();
         tl.from('[data-mesh-edge]', {
           strokeDashoffset: 420,
-          duration: 0.8,
-          stagger: 0.18,
+          duration: 0.45,
+          stagger: 0.1,
           ease: 'power2.out'
         })
-          .from('[data-mesh-node]', { scale: 0, transformOrigin: 'center', duration: 0.45, stagger: 0.12, ease: 'back.out(2)' }, '-=0.5')
-          .from('[data-mesh-label]', { opacity: 0, duration: 0.35, stagger: 0.1 }, '-=0.3');
+          .from(
+            '[data-mesh-node]',
+            { scale: 0, transformOrigin: 'center', duration: 0.3, stagger: 0.07, ease: 'back.out(2)' },
+            '-=0.35'
+          )
+          .from('[data-mesh-label]', { opacity: 0, duration: 0.25, stagger: 0.06 }, '-=0.2');
       }, el);
     });
 

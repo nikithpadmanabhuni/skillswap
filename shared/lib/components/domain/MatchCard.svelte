@@ -11,7 +11,7 @@
   let { match, peer }: { match: SwapMatch; peer: PublicProfile } = $props();
 </script>
 
-<Card class="flex flex-col gap-4">
+<Card class="flex h-full flex-col gap-4">
   <div class="flex items-start gap-3">
     <Avatar name={peer.name} src={peer.avatarUrl} size={44} />
     <div class="min-w-0 flex-1">
@@ -41,7 +41,7 @@
     {/if}
   </div>
 
-  <div class="flex items-center justify-between gap-3 border-t-[1.2px] border-(--color-line) pt-3">
+  <div class="mt-auto flex items-center justify-between gap-3 border-t-[1.2px] border-(--color-line) pt-3">
     <RatingStars rating={peer.rating} count={peer.reviewCount} />
     <Button href="/u/{peer.id}/propose" size="sm">
       Propose swap <ArrowRight />

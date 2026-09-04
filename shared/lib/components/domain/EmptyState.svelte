@@ -1,6 +1,7 @@
 <script lang="ts">
-  import type { Component, Snippet } from 'svelte';
+  import type { Snippet } from 'svelte';
   import { cn } from '../../utils/cn';
+  import type { IconComponent } from '../icon';
 
   // Flutter ProfessionalEmptyState: margin h32/v24, circular icon well padding 24
   // with outline@30% 1.5px border, icon 48, gap 20, title 18/w800/-0.3, body 14.
@@ -10,7 +11,7 @@
     body,
     class: className,
     action
-  }: { icon: Component; title: string; body: string; class?: string; action?: Snippet } =
+  }: { icon: IconComponent; title: string; body: string; class?: string; action?: Snippet } =
     $props();
 </script>
 
