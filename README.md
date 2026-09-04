@@ -72,6 +72,7 @@ what the software actually does.
 | Mesh certificate | A plain reference id, described as one. Not `SHA256-…-VERIFIED`, which is what the Flutter app rendered over a 32-bit non-cryptographic hash. |
 | Notification toggles | Save, but nothing delivers against them. The settings screen says so. |
 | Auth | `(app)/+layout.ts` is a **navigation guard, not a security boundary** — there is no server to verify anything. This is the one file the real build must change. |
+| Rendering | `ssr = false` in both root layouts, so every route is client-rendered. Spec §5.2 specifies SSR for most routes; that is the second thing the real build changes after the guard. Loads are universal `+page.ts` reading the mock module, so each becomes a `+page.server.ts` by rename plus moving the fetch. |
 
 Every mutation is local state with a `// TODO: convert to a form action` marker at the
 seam — 19 files. The shapes the routes read are already the shapes a server load would

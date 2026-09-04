@@ -6,7 +6,7 @@ import { mkdirSync } from 'node:fs';
  * and theme, and reports any console error or failed request it saw along the
  * way — a page that renders but throws is not a page that works.
  */
-const BASE = process.env.BASE ?? 'http://localhost:5175';
+const BASE = process.env.BASE ?? 'http://localhost:5173';
 const OUT = process.env.OUT ?? 'shots';
 const THEME = process.env.THEME ?? 'light';
 const WIDTH = Number(process.env.WIDTH ?? 1440);
