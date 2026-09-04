@@ -1,0 +1,18 @@
+/*
+ * Single stylesheet entry, imported by both apps' src/app.css.
+ * All @import statements must precede other at-rules (CSS ordering rule).
+ */
+@import '@fontsource-variable/inter';
+@import 'tailwindcss';
+@import './theme.css';
+@import './base.css';
+
+@plugin '@tailwindcss/typography';
+
+/* shared/ sits outside each app's root, so Tailwind's automatic source
+   detection will not find these files. Register them explicitly. */
+@source '../lib';
+
+/* Themes switch via a data-theme attribute on <html>, set before first paint. */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+@custom-variant night (&:where([data-theme='night'], [data-theme='night'] *));

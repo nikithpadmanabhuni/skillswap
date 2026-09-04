@@ -1,0 +1,92 @@
+/*
+ * Base layer shared by both apps: font, reset-ish defaults, a11y baseline, motion gate.
+ * Imported after theme.css.
+ */
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-size: var(--text-body-lg);
+    line-height: var(--text-body-lg--line-height);
+    font-weight: 500;
+  }
+
+  /* Visible focus states are a WCAG 2.1 AA requirement (spec 4.5).
+     Applied once here so no component has to remember. */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-primary) 28%, transparent);
+    color: var(--color-ink);
+  }
+
+  /* Scrollbars follow the theme rather than the OS */
+  * {
+    scrollbar-color: var(--color-line) transparent;
+    scrollbar-width: thin;
+  }
+}
+
+@layer components {
+  /* Skip link — first focusable element in both app shells */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--color-primary);
+    color: #fff;
+    font-weight: 700;
+    border-radius: 0 0 var(--radius-button) 0;
+  }
+  .skip-link:focus {
+    left: 0;
+  }
+}
+
+@layer utilities {
+  .text-display   { font-size: var(--text-display);   line-height: var(--text-display--line-height);   letter-spacing: var(--text-display--letter-spacing); font-weight: 900; }
+  .text-title-lg  { font-size: var(--text-title-lg);  letter-spacing: var(--text-title-lg--letter-spacing); font-weight: 800; }
+  .text-title-md  { font-size: var(--text-title-md);  letter-spacing: var(--text-title-md--letter-spacing); font-weight: 700; }
+  .text-title-sm  { font-size: var(--text-title-sm);  font-weight: 700; }
+  .text-body-lg   { font-size: var(--text-body-lg);   line-height: 1.5;  font-weight: 500; }
+  .text-body-md   { font-size: var(--text-body-md);   line-height: 1.45; font-weight: 500; }
+  .text-body-sm   { font-size: var(--text-body-sm);   line-height: 1.4;  font-weight: 500; }
+  .text-label     { font-size: var(--text-label);     font-weight: 700; }
+
+  .bg-gradient-karma       { background-image: var(--gradient-karma); }
+  .bg-gradient-brand       { background-image: var(--gradient-brand); }
+  .bg-gradient-mesh        { background-image: var(--gradient-mesh); }
+  .bg-gradient-celebration { background-image: var(--gradient-celebration); }
+  .bg-gradient-emerald     { background-image: var(--gradient-emerald); }
+}
+
+/*
+ * Reduced motion, honoured globally at the foundation (spec 2.6), not per component.
+ * The GSAP + motion runtimes read the same signal via $shared/motion/reduced-motion.ts.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%sveltekit.assets%/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      // Applied before first paint so the themed background never flashes.
+      // Mirrors readTheme() in $shared/theme/theme.svelte.ts — keep in sync.
+      (function () {
+        try {
+          var m = document.cookie.match(/(?:^|; )skillswap_theme=([^;]*)/);
+          var t = m ? decodeURIComponent(m[1]) : null;
+          if (t !== 'light' && t !== 'dark' && t !== 'night') {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {
+          /* cookie access can throw in some embedded contexts; light is a fine default */
+        }
+      })();
+    </script>
+    %sveltekit.head%
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
+  </body>
+</html>
