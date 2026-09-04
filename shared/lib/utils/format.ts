@@ -4,19 +4,40 @@
  * comparator calling DateTime.now() per comparison).
  */
 
+/**
+ * Everything renders in campus time, not the viewer's.
+ *
+ * Fixture timestamps are the times sessions actually happen on campus. Rendering
+ * them in the reader's timezone turns an 18:00 study session into 23:30, and
+ * pushes a Friday evening slot onto Saturday -- which reads as a data bug even
+ * though the underlying instant is right. A campus timetable is a local-time
+ * artefact, so pin the zone.
+ */
+const CAMPUS_TZ = 'Europe/London';
+
 const DATE = new Intl.DateTimeFormat('en-GB', {
   weekday: 'short',
   day: 'numeric',
-  month: 'short'
+  month: 'short',
+  timeZone: CAMPUS_TZ
 });
 const DATE_FULL = new Intl.DateTimeFormat('en-GB', {
   weekday: 'long',
   day: 'numeric',
   month: 'long',
-  year: 'numeric'
+  year: 'numeric',
+  timeZone: CAMPUS_TZ
 });
-const TIME = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit' });
-const MONTH = new Intl.DateTimeFormat('en-GB', { month: 'short', year: 'numeric' });
+const TIME = new Intl.DateTimeFormat('en-GB', {
+  hour: '2-digit',
+  minute: '2-digit',
+  timeZone: CAMPUS_TZ
+});
+const MONTH = new Intl.DateTimeFormat('en-GB', {
+  month: 'short',
+  year: 'numeric',
+  timeZone: 'UTC'
+});
 
 export const formatDate = (iso: string) => DATE.format(new Date(iso));
 export const formatDateFull = (iso: string) => DATE_FULL.format(new Date(iso));

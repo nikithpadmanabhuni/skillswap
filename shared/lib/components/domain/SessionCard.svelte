@@ -15,19 +15,24 @@
 </script>
 
 <Card interactive class="relative flex flex-col gap-3">
-  <div class="flex items-start justify-between gap-3">
-    <div class="min-w-0">
-      <h3 class="truncate text-title-md text-(--color-ink)">
-        <a href="/sessions/{session.id}" class="after:absolute after:inset-0 hover:underline">
-          {session.requestedSkillTitle}
-        </a>
-      </h3>
-      <p class="mt-0.5 truncate text-body-md text-(--color-ink-muted)">
+  <!--
+    The status pill sits on its own row rather than beside the title. Sharing a
+    row, a long label like "Pending approval" took most of a two-column card and
+    truncated "Film Photography" to "Film P...". The title gets the full width.
+  -->
+  <div class="flex flex-col gap-1.5">
+    <h3 class="text-title-md text-(--color-ink)">
+      <a href="/sessions/{session.id}" class="after:absolute after:inset-0 hover:underline">
+        {session.requestedSkillTitle}
+      </a>
+    </h3>
+    <div class="flex flex-wrap items-center justify-between gap-2">
+      <p class="min-w-0 flex-1 truncate text-body-md text-(--color-ink-muted)">
         {perspective === 'teaching' ? 'Teaching' : 'Learning from'}
         {counterpart}
       </p>
+      <SessionStatusPill status={session.status} size="sm" />
     </div>
-    <SessionStatusPill status={session.status} size="sm" />
   </div>
 
   <div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[0.75rem] text-(--color-ink-muted)">
