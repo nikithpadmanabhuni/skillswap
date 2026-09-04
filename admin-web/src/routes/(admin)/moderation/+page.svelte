@@ -54,7 +54,7 @@
 <svelte:head><title>Moderation · SkillSwap Admin</title></svelte:head>
 
 <SectionHeader
-  title="Moderation queue"
+  title="Moderation queue" level={1}
   subtitle="{counts.open} open. Every report is reviewed by a person."
 />
 

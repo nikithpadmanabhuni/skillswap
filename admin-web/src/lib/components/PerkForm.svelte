@@ -50,6 +50,7 @@
 <div class="max-w-2xl">
   <SectionHeader
     title={isNew ? 'New perk' : `Edit ${perk?.title}`}
+  level={1}
     subtitle="Students redeem this with Karma. A vendor has to be able to honour the code."
   />
 

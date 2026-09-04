@@ -27,7 +27,7 @@
 
 <svelte:head><title>Settings · SkillSwap Admin</title></svelte:head>
 
-<SectionHeader title="Settings" subtitle="Platform configuration for {CAMPUS}." />
+<SectionHeader title="Settings" level={1} subtitle="Platform configuration for {CAMPUS}." />
 
 <div class="mt-3 flex max-w-3xl flex-col gap-4">
   <Card class="flex flex-col gap-4">

@@ -33,7 +33,7 @@
 
 <svelte:head><title>Notifications · SkillSwap Campus</title></svelte:head>
 
-<SectionHeader title="Notifications" subtitle={unread ? `${unread} unread.` : 'All caught up.'}>
+<SectionHeader title="Notifications" level={1} subtitle={unread ? `${unread} unread.` : 'All caught up.'}>
   {#snippet action()}
     {#if unread}
       <Button

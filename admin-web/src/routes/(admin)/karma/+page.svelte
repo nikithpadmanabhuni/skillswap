@@ -42,7 +42,7 @@
 
 <svelte:head><title>Karma ledger · SkillSwap Admin</title></svelte:head>
 
-<SectionHeader title="Karma ledger" subtitle="Append-only. Balances are derived from it, never stored.">
+<SectionHeader title="Karma ledger" level={1} subtitle="Append-only. Balances are derived from it, never stored.">
   {#snippet action()}
     <Button size="sm" variant="outline" onclick={() => toasts.success('Ledger export queued.')}>
       <Download /> Export CSV

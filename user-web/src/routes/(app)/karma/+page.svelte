@@ -29,7 +29,7 @@
 
 <svelte:head><title>Karma wallet · SkillSwap Campus</title></svelte:head>
 
-<SectionHeader title="Karma wallet" subtitle="Every credit here was debited from someone else." />
+<SectionHeader title="Karma wallet" level={1} subtitle="Every credit here was debited from someone else." />
 
 <Card class="mt-3 flex flex-col items-center gap-3 bg-gradient-karma py-8 text-white">
   <p class="text-[0.75rem] font-bold tracking-wide uppercase opacity-90">Balance</p>

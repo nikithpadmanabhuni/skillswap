@@ -21,7 +21,7 @@
 
 <svelte:head><title>Settings · SkillSwap Campus</title></svelte:head>
 
-<SectionHeader title="Settings" />
+<SectionHeader title="Settings" level={1} />
 
 <div class="mt-3 flex flex-col gap-4">
   <Card class="flex flex-col gap-4">

@@ -124,7 +124,13 @@
   <ArrowLeft class="size-4" /> Profile
 </a>
 
-<form onsubmit={save} class="flex flex-col gap-5">
+<SectionHeader
+  title="Edit profile"
+  level={1}
+  subtitle="Your reputation is not editable here — rating, hours and Karma are computed from your sessions."
+/>
+
+<form onsubmit={save} class="mt-3 flex flex-col gap-5">
   <Card class="flex flex-col gap-5">
     <SectionHeader title="Details" />
 

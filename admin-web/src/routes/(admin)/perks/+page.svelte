@@ -23,7 +23,7 @@
 
 <svelte:head><title>Perks · SkillSwap Admin</title></svelte:head>
 
-<SectionHeader title="Perks" subtitle="The only Karma sink. Every redemption removes currency permanently.">
+<SectionHeader title="Perks" level={1} subtitle="The only Karma sink. Every redemption removes currency permanently.">
   {#snippet action()}
     <Button size="sm" href="/perks/new"><Plus /> New perk</Button>
   {/snippet}

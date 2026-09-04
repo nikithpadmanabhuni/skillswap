@@ -70,9 +70,9 @@
       </a>
       <Avatar name={peer.name} src={peer.avatarUrl} size={38} />
       <div class="min-w-0 flex-1">
-        <a href="/u/{peer.id}" class="block truncate text-title-sm text-(--color-ink) hover:underline">
-          {peer.name}
-        </a>
+        <h1 class="truncate text-title-sm text-(--color-ink)">
+          <a href="/u/{peer.id}" class="hover:underline">{peer.name}</a>
+        </h1>
         <p class="truncate text-[0.75rem] text-(--color-ink-muted)">
           {session.requestedSkillTitle}
         </p>

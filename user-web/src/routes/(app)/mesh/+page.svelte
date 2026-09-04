@@ -11,7 +11,7 @@
 <svelte:head><title>3-way mesh · SkillSwap Campus</title></svelte:head>
 
 <SectionHeader
-  title="3-way skill mesh"
+  title="3-way skill mesh" level={1}
   subtitle="Trades that a 1:1 marketplace structurally cannot see."
 />
 

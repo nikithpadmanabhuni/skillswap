@@ -81,7 +81,7 @@
 
     <div class="flex flex-col gap-4">
       <SectionHeader
-        title="Smart Lab"
+        title="Smart Lab" level={1}
         subtitle="Four phases, {done} of {total} complete."
       />
 

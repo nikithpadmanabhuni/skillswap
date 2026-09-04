@@ -10,7 +10,7 @@
 <svelte:head><title>Leaderboard · SkillSwap Admin</title></svelte:head>
 
 <SectionHeader
-  title="Leaderboard"
+  title="Leaderboard" level={1}
   subtitle="The same two rankings students see. Suspended accounts are excluded."
 />
 

@@ -12,7 +12,7 @@
 <svelte:head><title>Campus perks · SkillSwap Campus</title></svelte:head>
 
 <SectionHeader
-  title="Campus perks"
+  title="Campus perks" level={1}
   subtitle="Spend Karma with campus services. {affordable} of {catalogue.length} are within reach."
 >
   {#snippet action()}

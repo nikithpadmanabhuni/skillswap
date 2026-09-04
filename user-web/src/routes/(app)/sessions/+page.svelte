@@ -52,7 +52,7 @@
 
 <svelte:head><title>Sessions · SkillSwap Campus</title></svelte:head>
 
-<SectionHeader title="Sessions" subtitle="{live.length} active, {mine.length} in total.">
+<SectionHeader title="Sessions" level={1} subtitle="{live.length} active, {mine.length} in total.">
   {#snippet action()}
     <div class="flex gap-2">
       <div class="flex rounded-[var(--radius-button)] border-[1.2px] border-(--color-line) p-0.5">

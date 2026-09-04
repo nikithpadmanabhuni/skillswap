@@ -48,7 +48,7 @@
 
 <svelte:head><title>Sessions · SkillSwap Admin</title></svelte:head>
 
-<SectionHeader title="Sessions" subtitle="Every session on the platform." />
+<SectionHeader title="Sessions" level={1} subtitle="Every session on the platform." />
 
 <div class="mt-3 grid gap-3 sm:grid-cols-4">
   <StatTile label="Total" value={sessions.length} />

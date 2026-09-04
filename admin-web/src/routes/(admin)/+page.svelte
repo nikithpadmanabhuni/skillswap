@@ -31,7 +31,7 @@
 
 <svelte:head><title>Dashboard · SkillSwap Admin</title></svelte:head>
 
-<SectionHeader title="Dashboard" subtitle="Northgate University · single campus" />
+<SectionHeader title="Dashboard" level={1} subtitle="Northgate University · single campus" />
 
 <div class="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
   <StatTile

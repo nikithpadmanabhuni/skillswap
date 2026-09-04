@@ -12,7 +12,7 @@
 <svelte:head><title>Leaderboard · SkillSwap Campus</title></svelte:head>
 
 <SectionHeader
-  title="Leaderboard"
+  title="Leaderboard" level={1}
   subtitle={myRank ? `You are ranked ${myRank} of ${rows.length}.` : 'Ranked across the campus.'}
 />
 

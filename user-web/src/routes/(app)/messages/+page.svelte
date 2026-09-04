@@ -13,7 +13,7 @@
 <svelte:head><title>Messages · SkillSwap Campus</title></svelte:head>
 
 <SectionHeader
-  title="Messages"
+  title="Messages" level={1}
   subtitle="{threads.length} threads{unread ? `, ${unread} with something new` : ''}."
 />
 

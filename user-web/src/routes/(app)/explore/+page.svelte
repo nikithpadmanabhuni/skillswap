@@ -69,7 +69,7 @@
 <svelte:head><title>Explore · SkillSwap Campus</title></svelte:head>
 
 <SectionHeader
-  title="Explore"
+  title="Explore" level={1}
   subtitle="{matches.length} people match your skills — {mutualMatches.length} of them mutually."
 />
 

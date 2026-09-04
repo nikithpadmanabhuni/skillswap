@@ -60,7 +60,7 @@
     <div class="relative grid aspect-video place-items-center bg-gradient-mesh">
       <div class="flex flex-col items-center gap-3 text-white">
         <Avatar name={peer.name} src={peer.avatarUrl} size={96} class="ring-4 ring-white/25" />
-        <p class="text-title-lg">{peer.name}</p>
+        <h1 class="text-title-lg">{peer.name}</h1>
         <p class="text-[0.8125rem] opacity-80">
           {cameraOff ? 'Camera would be off' : 'Camera would be on'} · {muted
             ? 'Muted'

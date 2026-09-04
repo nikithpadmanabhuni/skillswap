@@ -54,7 +54,7 @@
 <svelte:head><title>Redemptions · SkillSwap Admin</title></svelte:head>
 
 <SectionHeader
-  title="Redemptions"
+  title="Redemptions" level={1}
   subtitle="Vendor-verifiable codes. This is where a café confirms one was honoured."
 />
 

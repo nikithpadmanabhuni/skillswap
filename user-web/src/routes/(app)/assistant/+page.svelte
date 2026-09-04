@@ -101,7 +101,7 @@
 
 <svelte:head><title>Assistant (prototype) · SkillSwap Campus</title></svelte:head>
 
-<SectionHeader title="Assistant" subtitle="Answers about your matches, Karma and sessions." />
+<SectionHeader title="Assistant" level={1} subtitle="Answers about your matches, Karma and sessions." />
 
 <PrototypeBanner
   what="Assistant"

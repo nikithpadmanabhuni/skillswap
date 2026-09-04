@@ -54,7 +54,7 @@
 
 <svelte:head><title>Users · SkillSwap Admin</title></svelte:head>
 
-<SectionHeader title="Users" subtitle="{users.length} accounts on this campus.">
+<SectionHeader title="Users" level={1} subtitle="{users.length} accounts on this campus.">
   {#snippet action()}
     <Button size="sm" onclick={() => (addOpen = true)}><UserPlus /> Add student</Button>
   {/snippet}

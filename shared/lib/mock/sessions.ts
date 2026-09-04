@@ -121,16 +121,20 @@ export const TARGET_LEARNED: Record<string, number> = {
   'u-025': 5, 'u-026': 5
 };
 
-const HISTORY_SKILLS: Record<string, string> = {
-  'u-me': 'Flutter Development', 'u-002': 'Acoustic Guitar', 'u-003': 'Spanish',
-  'u-004': 'Figma', 'u-005': 'Bouldering', 'u-006': 'Baking', 'u-007': 'Statistics',
-  'u-008': 'Yoga', 'u-009': 'Video Editing', 'u-010': 'Korean', 'u-011': 'Music Theory',
-  'u-012': 'Go', 'u-013': 'Drawing', 'u-014': 'Econometrics', 'u-015': 'CAD Modelling',
-  'u-016': 'Strength Training', 'u-017': 'Organic Chemistry', 'u-018': 'Unity',
-  'u-019': 'Legal Writing', 'u-020': 'SPSS & Research Methods', 'u-021': 'Embedded C',
-  'u-022': 'Excel & Modelling', 'u-023': 'Essay Writing', 'u-024': 'Nutrition Basics',
-  'u-025': 'Chess', 'u-026': 'Social Media Growth'
-};
+/**
+ * Which skill a generated session teaches. Rotating through the teacher's own
+ * offered list keeps the invariant that a session only ever teaches something
+ * the provider actually offers, and stops a prolific tutor's history reading as
+ * fifteen copies of the same session.
+ */
+const OFFERED: Record<string, string[]> = Object.fromEntries(
+  userSeeds.map((u) => [u.id, u.skillsOffered.map((s) => s.title)])
+);
+
+function historySkill(teacherId: string, n: number): string {
+  const list = OFFERED[teacherId];
+  return list?.length ? list[n % list.length] : 'Study session';
+}
 
 const NAMES: Record<string, string> = Object.fromEntries(userSeeds.map((u) => [u.id, u.name]));
 const nameOf = (id: string) => NAMES[id] ?? id;
@@ -195,6 +199,7 @@ function pairSlots(teachers: string[], learners: string[]): string[] {
 function buildHistory(): Session[] {
   const out: Session[] = [];
   const learners = pairSlots(teacherSlots, learnerSlots);
+  const taughtSoFar = new Map<string, number>();
 
   for (let i = 0; i < teacherSlots.length; i++) {
     const teacherId = teacherSlots[i];
@@ -211,7 +216,7 @@ function buildHistory(): Session[] {
       providerId: teacherId,
       teacherName: nameOf(teacherId),
       studentName: nameOf(learnerId),
-      requestedSkillTitle: HISTORY_SKILLS[teacherId] ?? 'Study session',
+      requestedSkillTitle: historySkill(teacherId, taughtSoFar.get(teacherId) ?? 0),
       offeredSkillTitle: undefined,
       scheduledDateTime: `2026-${month}-${day}T${hour}:00:00.000Z`,
       location: HISTORY_LOCATIONS[i % HISTORY_LOCATIONS.length],
@@ -220,6 +225,7 @@ function buildHistory(): Session[] {
       durationHours: 1,
       notes: ''
     });
+    taughtSoFar.set(teacherId, (taughtSoFar.get(teacherId) ?? 0) + 1);
   }
   return out;
 }
