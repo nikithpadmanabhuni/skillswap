@@ -9,8 +9,16 @@
     user,
     rank,
     metric,
-    isMe = false
-  }: { user: User; rank: number; metric: 'hours' | 'karma'; isMe?: boolean } = $props();
+    isMe = false,
+    profileHref = (id: string) => `/u/${id}`
+  }: {
+    user: User;
+    rank: number;
+    metric: 'hours' | 'karma';
+    isMe?: boolean;
+    /** The two apps route to profiles differently: /u/[id] vs /users/[id]. */
+    profileHref?: (id: string) => string;
+  } = $props();
 
   // Bronze is #CD7F32 in the Flutter source; gold and silver were never tokens.
   const MEDALS: Record<number, string> = { 1: '#F59E0B', 2: '#94A3B8', 3: '#CD7F32' };
@@ -34,7 +42,7 @@
   <Avatar name={user.name} src={user.avatarUrl} size={36} />
   <div class="min-w-0 flex-1">
     <p class="truncate text-[0.9375rem] font-bold text-(--color-ink)">
-      <a href="/u/{user.id}" class="hover:underline">{user.name}</a>
+      <a href={profileHref(user.id)} class="hover:underline">{user.name}</a>
       {#if isMe}<span class="ml-1 text-[0.6875rem] font-bold text-(--color-primary)">YOU</span>{/if}
     </p>
     <div class="mt-0.5 flex items-center gap-2">

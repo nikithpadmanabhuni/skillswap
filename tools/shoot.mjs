@@ -25,7 +25,9 @@ const ctx = await browser.newContext({
 
 const origin = new URL(BASE).origin;
 const cookies = [{ name: 'skillswap_theme', value: THEME, url: origin }];
-if (SIGNED_IN) cookies.push({ name: 'skillswap_session', value: '1', url: origin });
+// Each app has its own session cookie name; SESSION_COOKIE selects it.
+const sessionCookie = process.env.SESSION_COOKIE ?? 'skillswap_session';
+if (SIGNED_IN) cookies.push({ name: sessionCookie, value: '1', url: origin });
 await ctx.addCookies(cookies);
 
 const problems = [];
