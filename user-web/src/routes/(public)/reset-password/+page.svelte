@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { MailCheck, Send } from 'lucide-svelte';
-  import { Button, Card, Input } from '$shared/components/ui';
+  import { ArrowLeft, MailCheck, Send } from 'lucide-svelte';
+  import { Button, Input } from '$shared/components/ui';
 
   let email = $state('');
   let sent = $state(false);
@@ -18,41 +18,48 @@
 
 <svelte:head><title>Reset password · SkillSwap Campus</title></svelte:head>
 
-<Card class="flex flex-col gap-5">
+<div class="flex flex-col gap-7">
   {#if sent}
-    <div class="flex flex-col items-center gap-3 py-4 text-center">
+    <div class="flex flex-col items-center gap-4 text-center">
       <span class="grid size-14 place-items-center rounded-full bg-(--color-emerald)/15 text-(--color-emerald)">
-        <MailCheck class="size-6" />
+        <MailCheck class="size-6" aria-hidden="true" />
       </span>
-      <h1 class="text-title-lg text-(--color-ink)">Check your inbox</h1>
-      <p class="text-body-md text-(--color-ink-muted)">
+      <h1 class="text-[1.875rem] leading-[1.15] font-black tracking-[-0.03em] text-(--color-ink)">
+        Check your inbox
+      </h1>
+      <p class="text-body-lg text-(--color-ink-secondary)">
         If an account exists for <strong class="font-bold text-(--color-ink)">{email}</strong>, a
-        reset link is on its way. The link expires in an hour.
+        link to choose a new password is on its way. For your security it expires in an hour.
       </p>
-      <Button href="/login" variant="outline" full>Back to sign in</Button>
+      <p class="text-body-sm text-(--color-ink-muted)">Demo build: no email is actually sent.</p>
+      <Button href="/login" variant="outline" size="lg" full>Back to sign in</Button>
     </div>
   {:else}
     <div>
-      <h1 class="text-title-lg text-(--color-ink)">Reset your password</h1>
-      <p class="mt-1 text-body-md text-(--color-ink-muted)">
-        Enter your email and we will send you a link.
+      <h1 class="text-[1.875rem] leading-[1.15] font-black tracking-[-0.03em] text-(--color-ink)">
+        Reset your password
+      </h1>
+      <p class="mt-2 text-body-lg text-(--color-ink-secondary)">
+        Enter the email you signed up with and we will send you a link to choose a new password.
       </p>
     </div>
 
     <form onsubmit={submit} class="flex flex-col gap-4" novalidate>
       <Input
-        label="Email"
+        label="University email"
         type="email"
         autocomplete="email"
         bind:value={email}
         error={error || undefined}
       />
-      <Button type="submit" full><Send /> Send reset link</Button>
+      <Button type="submit" size="lg" full><Send /> Send reset link</Button>
     </form>
 
-    <p class="text-center text-[0.8125rem] text-(--color-ink-muted)">
-      Remembered it?
-      <a href="/login" class="font-bold text-(--color-primary) hover:underline">Sign in</a>
-    </p>
+    <a
+      href="/login"
+      class="inline-flex items-center justify-center gap-2 text-[0.875rem] font-bold text-(--color-primary) hover:underline"
+    >
+      <ArrowLeft class="size-4" aria-hidden="true" /> Back to sign in
+    </a>
   {/if}
-</Card>
+</div>

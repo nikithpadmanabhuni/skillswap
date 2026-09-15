@@ -70,6 +70,7 @@ what the software actually does.
 | `/sessions/[id]/call` | Labelled **UI prototype** on screen. No WebRTC, LiveKit or Agora; nothing is captured. |
 | `/assistant` | Labelled **UI prototype**. Scripted pattern matching, no model, no API call. Figures it quotes are read from real fixture data. |
 | Mesh certificate | A plain reference id, described as one. Not `SHA256-…-VERIFIED`, which is what the Flutter app rendered over a 32-bit non-cryptographic hash. |
+| Landing page and auth panel | Every name, quote and figure is read from the demo dataset at render time, with suspended accounts filtered out. No invented metrics, logos or testimonials; the footer says it is a demo build. |
 | Notification toggles | Save, but nothing delivers against them. The settings screen says so. |
 | Auth | `(app)/+layout.ts` is a **navigation guard, not a security boundary** — there is no server to verify anything. This is the one file the real build must change. |
 | Rendering | `ssr = false` in both root layouts, so every route is client-rendered. Spec §5.2 specifies SSR for most routes; that is the second thing the real build changes after the guard. Loads are universal `+page.ts` reading the mock module, so each becomes a `+page.server.ts` by rename plus moving the fetch. |

@@ -9,6 +9,8 @@ import { chromium } from 'playwright';
 const BASE = process.env.BASE ?? 'http://localhost:5173';
 const COOKIE = process.env.SESSION_COOKIE ?? 'skillswap_session';
 const ROUTES = (process.env.ROUTES ?? '/explore').split(',');
+// SIGNED_IN=0 checks public pages; signed in, the landing page redirects away.
+const SIGNED_IN = process.env.SIGNED_IN !== '0';
 
 const browser = await chromium.launch();
 const ctx = await browser.newContext({
@@ -16,7 +18,7 @@ const ctx = await browser.newContext({
   reducedMotion: 'reduce'
 });
 await ctx.addCookies([
-  { name: COOKIE, value: '1', url: new URL(BASE).origin },
+  ...(SIGNED_IN ? [{ name: COOKIE, value: '1', url: new URL(BASE).origin }] : []),
   { name: 'skillswap_theme', value: 'light', url: new URL(BASE).origin }
 ]);
 const page = await ctx.newPage();

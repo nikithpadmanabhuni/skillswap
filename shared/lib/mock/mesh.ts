@@ -50,7 +50,7 @@ export const meshes: CircularMeshMatch[] = [
     skillCtoA: skillOf('u-002', 'Acoustic Guitar'),
     synergyScore: 97,
     reasoning:
-      'A closed loop with no currency: you teach Mei-Ling data structures, she teaches Priya Figma, and Priya teaches you guitar. None of these three pairs matches on its own.',
+      'A closed loop with no currency: you teach Mei-Ling data structures, Mei-Ling teaches Priya Figma, and Priya teaches you guitar. Your two legs are exact wants; Priya has not listed Figma, so that leg is a suggestion.',
     milestones: milestones(4),
     referenceId: 'MESH-M001-8F3A',
     createdAt: '2026-08-05T10:00:00.000Z',
