@@ -1,47 +1,17 @@
 <script lang="ts">
   import { Info, LogIn } from 'lucide-svelte';
-  import { goto } from '$app/navigation';
+  import { enhance } from '$app/forms';
   import { Button, Input, toasts } from '$shared/components/ui';
-  import { session } from '$lib/session.svelte';
   import { currentUser } from '$shared/mock';
+  import type { ActionData } from './$types';
 
-  let email = $state(currentUser.email);
-  let password = $state('');
-  let error = $state('');
+  let { form }: { form: ActionData } = $props();
+
   let busy = $state(false);
 
-  /**
-   * TODO: convert to a form action (POST /login) once there is a server.
-   *
-   * This is the exact flow audit P0-1 was about: the Flutter app caught the
-   * FirebaseAuthException, fabricated a local user, and navigated into the app
-   * regardless — so any wrong password granted access. The demo credential is
-   * printed below rather than accepted silently, and anything else is refused.
-   */
-  async function submit(e: SubmitEvent) {
-    e.preventDefault();
-    error = '';
-
-    if (!email.trim()) return (error = 'Enter your email address.');
-    if (!password) return (error = 'Enter your password.');
-
-    busy = true;
-    if (password !== 'demo') {
-      busy = false;
-      // Stays on /login and reports the failure. It does not navigate, and it
-      // does not say which of the two fields was wrong.
-      error = 'That email and password do not match.';
-      return;
-    }
-
-    session.signIn();
-    toasts.success(`Welcome back, ${currentUser.name.split(' ')[0]}.`);
-    await goto('/explore');
-  }
-
+  // In a real app we'd use Google provider from firebase/auth
   function continueWithGoogle() {
-    session.signIn();
-    goto('/explore');
+    toasts.success('Google sign-in is mocked in this demo.');
   }
 </script>
 
@@ -69,15 +39,32 @@
     </p>
   </div>
 
-  <form onsubmit={submit} class="flex flex-col gap-4" novalidate>
-    <Input label="University email" type="email" autocomplete="email" bind:value={email} />
+  <form
+    method="POST"
+    use:enhance={() => {
+      busy = true;
+      return async ({ update }) => {
+        busy = false;
+        await update();
+      };
+    }}
+    class="flex flex-col gap-4"
+    novalidate
+  >
+    <Input
+      label="University email"
+      name="email"
+      type="email"
+      autocomplete="email"
+      value={form?.email ?? currentUser.email}
+    />
     <div class="flex flex-col gap-2">
       <Input
         label="Password"
+        name="password"
         type="password"
         autocomplete="current-password"
-        bind:value={password}
-        error={error || undefined}
+        error={form?.error}
       />
       <a
         href="/reset-password"

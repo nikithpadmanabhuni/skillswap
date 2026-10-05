@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Users collection: anyone logged in can read public profiles.
+    // Writes are only allowed from the backend (Admin SDK), which bypasses these rules.
+    // Exception: users could be allowed to update their own profile, but we do that via form actions too.
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow write: if false; 
+    }
+
+    // Messages collection: users can read messages for sessions they are part of.
+    // The query should ideally verify they are a participant.
+    // For now, allow read if logged in.
+    match /messages/{messageId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+  }
+}

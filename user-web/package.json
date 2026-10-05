@@ -26,6 +26,8 @@
     "@fontsource-variable/inter": "^5.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "firebase": "^12.19.0",
+    "firebase-admin": "^14.4.0",
     "gsap": "^3.12.5",
     "lucide-svelte": "^1.0.1",
     "motion": "^13.2.0",

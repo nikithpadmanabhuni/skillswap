@@ -3,17 +3,12 @@
   import { goto } from '$app/navigation';
   import { Button, Card, Input, Select, Textarea } from '$shared/components/ui';
   import { KarmaBadge, SkillChip } from '$shared/components/domain';
-  import {
-    CATEGORY_LABELS,
-    LEVEL_LABELS,
-    SKILL_CATEGORIES,
-    SKILL_LEVELS,
-    type Skill,
-    type SkillCategory,
-    type SkillLevel
-  } from '$shared/types';
+  import { CATEGORY_LABELS, LEVEL_LABELS, SKILL_CATEGORIES, SKILL_LEVELS, type Skill, type SkillCategory, type SkillLevel } from '$shared/types';
   import { CAMPUS, KARMA } from '$shared/mock';
-  import { session } from '$lib/session.svelte';
+  import { enhance } from '$app/forms';
+  import type { ActionData } from './$types';
+
+  let { form }: { form: ActionData } = $props();
 
   // Three steps: who you are, what you teach, what you want. Splitting it keeps
   // the first-run form from looking like a tax return.
@@ -58,10 +53,11 @@
     step === 1 ? name.trim().length > 0 && major.trim().length > 0 : true
   );
 
-  // TODO: convert to a form action (POST /onboarding).
+  let formElement = $state<HTMLFormElement>();
+  let busy = $state(false);
+
   function finish() {
-    session.needsOnboarding = false;
-    goto('/explore');
+    if (formElement) formElement.requestSubmit();
   }
 </script>
 
@@ -144,7 +140,24 @@
       {#if step < 3}
         <Button disabled={!canContinue} onclick={() => (step += 1)}>Continue <ArrowRight /></Button>
       {:else}
-        <Button onclick={finish}><Sparkles /> Start swapping</Button>
+        <form 
+          method="POST" 
+          bind:this={formElement}
+          use:enhance={() => {
+            busy = true;
+            return async ({ update, result }) => {
+              busy = false;
+              if (result.type === 'success') {
+                goto('/explore');
+              } else {
+                await update();
+              }
+            };
+          }}
+        >
+          <input type="hidden" name="payload" value={JSON.stringify({ name, campus, major, bio, offered, wanted })} />
+        </form>
+        <Button disabled={busy} onclick={finish}><Sparkles /> Start swapping</Button>
       {/if}
     </div>
   </Card>

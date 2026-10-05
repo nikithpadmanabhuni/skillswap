@@ -1,15 +1,12 @@
 <script lang="ts">
   import { UserPlus } from 'lucide-svelte';
-  import { goto } from '$app/navigation';
+  import { enhance } from '$app/forms';
   import { Button, Input } from '$shared/components/ui';
   import { KarmaBadge } from '$shared/components/domain';
   import { KARMA } from '$shared/mock';
-  import { session } from '$lib/session.svelte';
+  import type { ActionData } from './$types';
 
-  let name = $state('');
-  let email = $state('');
-  let password = $state('');
-  let errors = $state<Record<string, string>>({});
+  let { form }: { form: ActionData } = $props();
 
   const freeHours = Math.floor(KARMA.JOINING_GRANT / KARMA.PER_SESSION);
 
@@ -28,20 +25,7 @@
     }
   ];
 
-  // TODO: convert to a form action (POST /signup).
-  async function submit(e: SubmitEvent) {
-    e.preventDefault();
-    const next: Record<string, string> = {};
-    if (!name.trim()) next.name = 'We need something to call you.';
-    if (!email.includes('@')) next.email = 'That does not look like an email address.';
-    if (password.length < 8) next.password = 'Use at least 8 characters.';
-    errors = next;
-    if (Object.keys(next).length) return;
-
-    session.signIn();
-    session.needsOnboarding = true;
-    await goto('/onboarding');
-  }
+  let busy = $state(false);
 </script>
 
 <svelte:head><title>Create an account · SkillSwap Campus</title></svelte:head>
@@ -57,25 +41,37 @@
     </p>
   </div>
 
-  <form onsubmit={submit} class="flex flex-col gap-4" novalidate>
-    <Input label="Full name" autocomplete="name" bind:value={name} error={errors.name} />
+  <form 
+    method="POST" 
+    use:enhance={() => {
+      busy = true;
+      return async ({ update }) => {
+        busy = false;
+        await update();
+      };
+    }}
+    class="flex flex-col gap-4" 
+    novalidate
+  >
+    <Input label="Full name" name="name" autocomplete="name" value={form?.name ?? ''} error={form?.errors?.name} />
     <Input
       label="University email"
+      name="email"
       type="email"
       autocomplete="email"
-      bind:value={email}
-      error={errors.email}
+      value={form?.email ?? ''}
+      error={form?.errors?.email}
       hint="Use your university address."
     />
     <Input
       label="Password"
+      name="password"
       type="password"
       autocomplete="new-password"
-      bind:value={password}
-      error={errors.password}
+      error={form?.errors?.password}
       hint="At least 8 characters."
     />
-    <Button type="submit" size="lg" full><UserPlus /> Create account</Button>
+    <Button type="submit" size="lg" disabled={busy} full><UserPlus /> Create account</Button>
   </form>
 
   <section
