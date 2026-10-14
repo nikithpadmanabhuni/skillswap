@@ -9,7 +9,7 @@ const serviceAccount = env.FIREBASE_SERVICE_ACCOUNT_JSON
 
 if (!getApps().length) {
   initializeApp({
-    credential: env.FIREBASE_SERVICE_ACCOUNT_JSON ? cert(serviceAccount) : undefined,
+    ...(env.FIREBASE_SERVICE_ACCOUNT_JSON ? { credential: cert(serviceAccount) } : {}),
     projectId: serviceAccount.projectId || 'skillswap-campus-dev',
   });
 }

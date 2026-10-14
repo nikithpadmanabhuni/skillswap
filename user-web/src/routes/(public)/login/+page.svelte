@@ -1,17 +1,52 @@
 <script lang="ts">
-  import { Info, LogIn } from 'lucide-svelte';
-  import { enhance } from '$app/forms';
+  import { Info, LogIn, Sparkles } from 'lucide-svelte';
+  import { goto } from '$app/navigation';
   import { Button, Input, toasts } from '$shared/components/ui';
   import { currentUser } from '$shared/mock';
-  import type { ActionData } from './$types';
+  import { session } from '$lib/session.svelte';
 
-  let { form }: { form: ActionData } = $props();
-
+  let email = $state(currentUser.email);
+  let password = $state('demo');
+  let error = $state('');
   let busy = $state(false);
 
-  // In a real app we'd use Google provider from firebase/auth
+  function fillDemo() {
+    email = currentUser.email;
+    password = 'demo';
+    error = '';
+    toasts.success('Demo credentials filled!');
+  }
+
+  async function submit(e?: Event) {
+    if (e) e.preventDefault();
+    error = '';
+
+    if (!email.trim()) {
+      error = 'Enter your email address.';
+      return;
+    }
+    if (!password) {
+      error = 'Enter your password.';
+      return;
+    }
+
+    busy = true;
+    if (password !== 'demo') {
+      busy = false;
+      error = 'That email and password do not match.';
+      return;
+    }
+
+    session.signIn();
+    toasts.success(`Welcome back, ${currentUser.name.split(' ')[0]}.`);
+    await goto('/explore');
+    busy = false;
+  }
+
   function continueWithGoogle() {
-    toasts.success('Google sign-in is mocked in this demo.');
+    session.signIn();
+    toasts.success(`Welcome back, ${currentUser.name.split(' ')[0]}.`);
+    goto('/explore');
   }
 </script>
 
@@ -29,34 +64,26 @@
 
   <div
     role="note"
-    class="flex items-start gap-3 rounded-[var(--radius-input)] border-[1.2px] border-(--color-brand)/30 bg-(--color-brand)/8 p-3.5"
+    class="flex items-center justify-between gap-3 rounded-[var(--radius-input)] border-[1.2px] border-(--color-brand)/30 bg-(--color-brand)/8 p-3.5"
   >
-    <Info class="mt-0.5 size-4 shrink-0 text-(--color-primary)" aria-hidden="true" />
-    <p class="text-body-md text-(--color-ink-secondary)">
-      <span class="font-bold text-(--color-ink)">Demo build.</span> Sign in with the email below and
-      the password
-      <code class="rounded-md bg-(--color-elevated) px-1.5 py-0.5 font-mono text-[0.8125rem] font-bold text-(--color-ink)">demo</code>.
-    </p>
+    <div class="flex items-start gap-3">
+      <Info class="mt-0.5 size-4 shrink-0 text-(--color-primary)" aria-hidden="true" />
+      <p class="text-body-md text-(--color-ink-secondary)">
+        <span class="font-bold text-(--color-ink)">Demo build.</span> Pre-filled with demo credentials (password: <code class="rounded-md bg-(--color-elevated) px-1.5 py-0.5 font-mono text-[0.8125rem] font-bold text-(--color-ink)">demo</code>).
+      </p>
+    </div>
+    <Button type="button" variant="ghost" size="sm" onclick={fillDemo} class="shrink-0 gap-1.5">
+      <Sparkles class="size-3.5 text-(--color-primary)" /> Auto-fill
+    </Button>
   </div>
 
-  <form
-    method="POST"
-    use:enhance={() => {
-      busy = true;
-      return async ({ update }) => {
-        busy = false;
-        await update();
-      };
-    }}
-    class="flex flex-col gap-4"
-    novalidate
-  >
+  <form onsubmit={submit} class="flex flex-col gap-4" novalidate>
     <Input
       label="University email"
       name="email"
       type="email"
       autocomplete="email"
-      value={form?.email ?? currentUser.email}
+      bind:value={email}
     />
     <div class="flex flex-col gap-2">
       <Input
@@ -64,7 +91,8 @@
         name="password"
         type="password"
         autocomplete="current-password"
-        error={form?.error}
+        bind:value={password}
+        error={error || undefined}
       />
       <a
         href="/reset-password"
@@ -74,7 +102,7 @@
       </a>
     </div>
 
-    <Button type="submit" size="lg" full disabled={busy}>
+    <Button type="submit" size="lg" full disabled={busy} onclick={submit}>
       <LogIn /> Sign in
     </Button>
   </form>

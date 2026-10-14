@@ -44,8 +44,9 @@
     full?: boolean;
     href?: string;
     class?: string;
+    type?: 'button' | 'submit' | 'reset';
     children: Snippet;
-  } & Omit<HTMLButtonAttributes & HTMLAnchorAttributes, 'size'>;
+  } & Omit<HTMLButtonAttributes & HTMLAnchorAttributes, 'size' | 'type'>;
 
   let {
     variant = 'primary',
@@ -53,6 +54,7 @@
     full = false,
     href,
     class: className,
+    type = 'button',
     children,
     ...rest
   }: Props = $props();
@@ -63,7 +65,7 @@
     {@render children()}
   </a>
 {:else}
-  <button type="button" class={cn(button({ variant, size, full }), className)} {...rest}>
+  <button {type} class={cn(button({ variant, size, full }), className)} {...rest}>
     {@render children()}
   </button>
 {/if}

@@ -60,9 +60,13 @@ class SessionStore {
   private write(value: string) {
     if (!browser) return;
     try {
-      document.cookie = value
-        ? `${COOKIE}=1; path=/; max-age=604800; samesite=lax`
-        : `${COOKIE}=; path=/; max-age=0; samesite=lax`;
+      if (value) {
+        document.cookie = `${COOKIE}=1; path=/; max-age=604800; samesite=lax`;
+        document.cookie = `session=mock-session-cookie-${encodeURIComponent(currentUser.email)}; path=/; max-age=604800; samesite=lax`;
+      } else {
+        document.cookie = `${COOKIE}=; path=/; max-age=0; samesite=lax`;
+        document.cookie = `session=; path=/; max-age=0; samesite=lax`;
+      }
     } catch {
       /* in-memory state still carries the session for this tab */
     }

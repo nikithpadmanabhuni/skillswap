@@ -13,18 +13,30 @@
     Trophy,
     Users,
     Wallet,
-    Settings as SettingsIcon
+    Settings as SettingsIcon,
+    BookOpen
   } from 'lucide-svelte';
   import { Avatar, Sheet } from '$shared/components/ui';
-  import { openReports, totals } from '$shared/mock';
+  import { openReports, totals, libraryStore } from '$shared/mock';
   import { admin } from '$lib/session.svelte';
   import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
 
   let { children } = $props();
   let navOpen = $state(false);
 
-  const nav = [
+  let pendingRequestsCount = $derived(
+    libraryStore.getBorrowRequests().filter((r) => r.status === 'pending').length
+  );
+
+  const nav = $derived([
     { href: '/', label: 'Dashboard', icon: LayoutDashboard },
+    {
+      href: '/library',
+      label: 'Library Desk',
+      icon: BookOpen,
+      count: pendingRequestsCount,
+      urgent: pendingRequestsCount > 0
+    },
     { href: '/users', label: 'Users', icon: Users, count: totals.users },
     { href: '/moderation', label: 'Moderation', icon: ShieldAlert, count: openReports.length, urgent: true },
     { href: '/sessions', label: 'Sessions', icon: CalendarDays },
@@ -33,7 +45,7 @@
     { href: '/redemptions', label: 'Redemptions', icon: Ticket },
     { href: '/leaderboard', label: 'Leaderboard', icon: Trophy },
     { href: '/settings', label: 'Settings', icon: SettingsIcon }
-  ];
+  ]);
 
   const isActive = (href: string) =>
     href === '/' ? page.url.pathname === '/' : page.url.pathname.startsWith(href);

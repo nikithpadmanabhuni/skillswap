@@ -1,13 +1,19 @@
 <script lang="ts">
-  import { LogIn, ShieldCheck } from 'lucide-svelte';
+  import { LogIn, ShieldCheck, Sparkles } from 'lucide-svelte';
   import { goto } from '$app/navigation';
   import { Button, Card, Input } from '$shared/components/ui';
   import { admin } from '$lib/session.svelte';
   import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
 
   let email = $state(admin.email);
-  let password = $state('');
+  let password = $state('demo');
   let error = $state('');
+
+  function fillDemo() {
+    email = admin.email;
+    password = 'demo';
+    error = '';
+  }
 
   // TODO: convert to a form action. A real admin sign-in must verify a session
   // cookie AND an administrator role claim server-side; neither is possible here.
@@ -38,7 +44,14 @@
         Northgate University.
       </p>
 
-      <form onsubmit={submit} class="mt-5 flex flex-col gap-4" novalidate>
+      <div class="mt-4 flex items-center justify-between rounded-[var(--radius-input)] border-[1.2px] border-(--color-brand)/30 bg-(--color-brand)/8 p-2.5 px-3">
+        <span class="text-[0.8125rem] text-(--color-ink-secondary)">Demo password: <code class="font-bold text-(--color-ink)">demo</code></span>
+        <Button type="button" variant="ghost" size="sm" onclick={fillDemo} class="h-7 px-2 text-[0.75rem] gap-1">
+          <Sparkles class="size-3 text-(--color-primary)" /> Auto-fill
+        </Button>
+      </div>
+
+      <form onsubmit={submit} class="mt-4 flex flex-col gap-4" novalidate>
         <Input label="Email" type="email" autocomplete="email" bind:value={email} />
         <Input
           label="Password"

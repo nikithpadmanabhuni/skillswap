@@ -16,6 +16,7 @@ import type { LayoutLoad } from './$types';
  * and nowhere else: rename the file and read event.locals.user instead.
  */
 export const load: LayoutLoad = () => {
+  session.init();
   if (!session.signedIn) {
     redirect(303, '/login');
   }

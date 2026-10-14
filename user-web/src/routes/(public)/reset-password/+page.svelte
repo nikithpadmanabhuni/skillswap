@@ -1,18 +1,26 @@
 <script lang="ts">
   import { ArrowLeft, MailCheck, Send } from 'lucide-svelte';
-  import { enhance } from '$app/forms';
   import { Button, Input } from '$shared/components/ui';
-  import type { ActionData } from './$types';
 
-  let { form }: { form: ActionData } = $props();
+  let email = $state('');
+  let sent = $state(false);
+  let error = $state('');
 
-  let busy = $state(false);
+  function submit(e: SubmitEvent) {
+    e.preventDefault();
+    if (!email.includes('@')) {
+      error = 'Enter the email you signed up with.';
+      return;
+    }
+    error = '';
+    sent = true;
+  }
 </script>
 
 <svelte:head><title>Reset password · SkillSwap Campus</title></svelte:head>
 
 <div class="flex flex-col gap-7">
-  {#if form?.success}
+  {#if sent}
     <div class="flex flex-col items-center gap-4 text-center">
       <span class="grid size-14 place-items-center rounded-full bg-(--color-emerald)/15 text-(--color-emerald)">
         <MailCheck class="size-6" aria-hidden="true" />
@@ -21,7 +29,7 @@
         Check your inbox
       </h1>
       <p class="text-body-lg text-(--color-ink-secondary)">
-        If an account exists for <strong class="font-bold text-(--color-ink)">{form?.email || ''}</strong>, a
+        If an account exists for <strong class="font-bold text-(--color-ink)">{email}</strong>, a
         link to choose a new password is on its way. For your security it expires in an hour.
       </p>
       <p class="text-body-sm text-(--color-ink-muted)">Demo build: no email is actually sent.</p>
@@ -37,27 +45,15 @@
       </p>
     </div>
 
-    <form
-      method="POST"
-      use:enhance={() => {
-        busy = true;
-        return async ({ update }) => {
-          busy = false;
-          await update();
-        };
-      }}
-      class="flex flex-col gap-4"
-      novalidate
-    >
+    <form onsubmit={submit} class="flex flex-col gap-4" novalidate>
       <Input
         label="University email"
-        name="email"
         type="email"
         autocomplete="email"
-        value={form?.email ?? ''}
-        error={form?.error}
+        bind:value={email}
+        error={error || undefined}
       />
-      <Button type="submit" size="lg" disabled={busy} full><Send /> Send reset link</Button>
+      <Button type="submit" size="lg" full><Send /> Send reset link</Button>
     </form>
 
     <a

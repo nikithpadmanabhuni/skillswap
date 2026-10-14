@@ -5,6 +5,9 @@
   "type": "module",
   "description": "SkillSwap Campus \u2014 student web app + admin panel (UI only, shared design layer)",
   "scripts": {
+    "dev": "npm run dev --prefix user-web",
+    "dev:user": "npm run dev --prefix user-web",
+    "dev:admin": "npm run dev --prefix admin-web",
     "test": "vitest run --config vitest.config.ts",
     "build": "npm run build --prefix user-web && npm run build --prefix admin-web",
     "check": "npm run check --prefix user-web && npm run check --prefix admin-web",

@@ -12,6 +12,14 @@ export const handle: Handle = async ({ event, resolve }) => {
     return resolve(event);
   }
 
+  if (sessionCookie.startsWith('mock-session-cookie-')) {
+    const email = decodeURIComponent(sessionCookie.replace('mock-session-cookie-', ''));
+    const mockUser = mockUsers.find(u => u.email === email) || mockUsers[0];
+    event.locals.user = mockUser;
+    event.locals.decodedIdToken = { uid: mockUser.id, email: mockUser.email } as any;
+    return resolve(event);
+  }
+
   try {
     const decodedClaims = await adminAuth.verifySessionCookie(sessionCookie, true);
     event.locals.decodedIdToken = decodedClaims;

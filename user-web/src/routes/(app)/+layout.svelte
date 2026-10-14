@@ -12,7 +12,8 @@
     CalendarDays,
     Gift,
     Wallet,
-    Bot
+    Bot,
+    BookOpen
   } from 'lucide-svelte';
   import { goto } from '$app/navigation';
   import { Avatar } from '$shared/components/ui';
@@ -20,6 +21,7 @@
   import { currentUser, unreadCount } from '$shared/mock';
   import { session } from '$lib/session.svelte';
   import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
+  import AudiobookPlayerDock from '$lib/components/AudiobookPlayerDock.svelte';
 
   let { children } = $props();
 
@@ -27,6 +29,7 @@
   const nav = [
     { href: '/explore', label: 'Explore', icon: Compass, primary: true },
     { href: '/sessions', label: 'Sessions', icon: CalendarDays, primary: true },
+    { href: '/library', label: 'Library', icon: BookOpen, primary: true },
     { href: '/mesh', label: 'Mesh', icon: Triangle, primary: true },
     { href: '/messages', label: 'Messages', icon: MessageSquare, primary: true },
     { href: '/profile', label: 'Profile', icon: User, primary: true },
@@ -178,4 +181,6 @@
       </a>
     {/each}
   </nav>
+
+  <AudiobookPlayerDock />
 </div>
